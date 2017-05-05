@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="/layout/head :: head"></div>
+    <script language="JavaScript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script language="JavaScript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript" src="/extend/js/bootbox.min.js"></script>
+    <script language="javascript" src="/extend/js/common.js"></script>
+    <script language="javascript" src="/extend/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+
+    <script language="javascript" type="application/javascript" xmlns:th="http://www.w3.org/1999/xhtml"
+            th:inline="javascript">
+        function showChart(containerid, bigtitle, ytitle, eachtitle, categories, xvalues) {
+            $('#' + containerid).highcharts({
+                chart: {
+                    type: 'column',
+                    margin: [50, 50, 100, 80]
+                },
+                title: {
+                    text: bigtitle
+                },
+                xAxis: {
+                    categories: categories,
+                    labels: {
+                        rotation: -45,
+                        align: 'right',
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Microsoft Yahei'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ytitle
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: eachtitle + ': <b>{point.y:.1f}</b>',
+                },
+                series: [{
+                    name: 'Population',
+                    data: xvalues,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        x: 4,
+                        y: 10,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Microsoft Yahei',
+                            textShadow: '0 0 3px black'
+                        }
+                    }
+                }]
+            });
+        }
+
+        function search() {
+
+            /*<![CDATA[*/
+            $.ajax({
+                type: 'GET',
+
+                url: '/exception/top',
+
+                async: true,
+                dataType: "json",
+                beforeSend: function () {
+
+                }
+                ,
+                success: function (json) {
+                    var categories = [];
+                    var xvalues = [];
+                    for (var key in json) {
+                        var value = json[key];
+                        categories.push(key);
+                        xvalues.push(value);
+                    }
+                    showChart('chart', '最近一小时内应用异常TOP10排名', '异常个数', '共有异常数', categories, xvalues);
+                }
+                ,
+                error: function () {
+                    alertDialog("加载数据出现异常！");
+                }
+            })
+            ;
+            /*]]>*/
+        }
+
+        $(document).ready(function () {
+            search();
+            setInterval("search()", 600000);
+
+        });
+    </script>
+</head>
+<body>
+
+<div th:include="/layout/navbar :: navbar"></div>
+
+
+<div class="container" style="margin-top: 50px;">
+    <div id="chart" style="min-width:800px;height:600px"></div>
+</div>
+<script language="javascript" src="/extend/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script language="javascript"
+        src="/extend/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script language="javascript"
+        src="/extend/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker-extension.js"></script>
+</body>
+</html>

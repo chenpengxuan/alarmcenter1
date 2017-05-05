@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="/layout/head :: head"></div>
+</head>
+<body>
+
+<div th:include="/layout/navbar :: navbar"></div>
+
+
+<div class="container" style="margin-top: 50px;" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            配置详情
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <td width="250">应用编号</td>
+                    <td><span th:text="${appId}"></span></td>
+                </tr>
+
+                <tr>
+                    <td>邮件</td>
+                    <td><span th:text="${emailTo}"></span></td>
+                </tr>
+                <tr>
+                    <td>短信</td>
+                    <td><span th:text="${phoneNumber}"></span></td>
+                </tr>
+                <tr>
+                    <td>错误邮件设置</td>
+                    <td>
+                        <span th:text="|${sendEmailTimeInterval}分钟出现${sendEmailNumLimit}次|"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>错误短信设置</td>
+                    <td><span th:text="|${sendSmsTimeInterval}分钟出现${sendSmsNumLimit}次|"></span></td>
+                </tr>
+                <tr>
+                    <td>异常白名单</td>
+                    <td th:text="${whitelist}"></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<div th:include="/layout/footer :: footer"></div>
+</body>
+</html>
+
+
+

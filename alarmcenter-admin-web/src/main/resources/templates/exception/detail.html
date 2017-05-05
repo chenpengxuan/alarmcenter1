@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:include="/layout/head :: head"></div>
+    <style type="text/css">
+        table tr td {
+            vertical-align: top;
+            min-height: 20px;
+        }
+
+        .ylbg {
+            background: #ffffcc;
+        }
+
+        .rd {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+
+<div th:include="/layout/navbar :: navbar"></div>
+
+<table class="table" width="100%">
+    <tr>
+        <td width="250">应用编号:</td>
+        <td th:text="${errorLog.appId}">
+        </td>
+    </tr>
+
+    <tr>
+        <td>报错时间</td>
+        <td th:text="${errorLog.addTime}"></td>
+    </tr>
+    <tr>
+        <td>报错Url</td>
+        <td th:text="${errorLog.reqUrl}">
+        </td>
+    </tr>
+    <tr>
+        <td>Form请求</td>
+        <td th:utext="${errorLog.reqForm}">
+        </td>
+    </tr>
+    <tr>
+        <td>报错请求头信息</td>
+        <td th:utext="${errorLog.header}">
+        </td>
+    </tr>
+
+    <tr>
+        <td>报错服务器Ip</td>
+        <td th:text="${errorLog.machineIp}"></td>
+    </tr>
+
+    <tr>
+        <td>报错级别</td>
+        <td th:text="${errorLevel==null?'':errorLevel.getMessage()}"></td>
+    </tr>
+    <tr>
+        <td>报错方法名</td>
+        <td th:text="${errorLog.methodName}"></td>
+    </tr>
+    <tr>
+        <td>报错方法命名空间</td>
+        <td th:text="${errorLog.assemblyName}"></td>
+    </tr>
+    <tr>
+        <td>报错异常类型</td>
+        <td th:text="${errorLog.exceptionName}"></td>
+    </tr>
+    <tr>
+        <td>报错标题</td>
+        <td><span th:text="${errorLog.title}"></span>
+        </td>
+    </tr>
+
+    <tr>
+        <td>报错信息</td>
+        <td th:text="${errorLog.message}" class="rd">
+        </td>
+    </tr>
+
+    <tr>
+        <td>报错堆栈信息</td>
+        <td th:utext="${errorLog.stackTrace}" class="ylbg">
+
+        </td>
+    </tr>
+</table>
+
+
+<div th:include="/layout/footer :: footer"></div>
+</body>
+</html>
+
+
+
